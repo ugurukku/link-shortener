@@ -1,0 +1,15 @@
+version: '3'
+services:
+  link-shortener-db:
+    image: mysql:8.2.0
+    container_name: link-shortener-db
+    environment:
+      MYSQL_DATABASE: 'link_shortener'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - "3306:3306"
+    volumes:
+      - link-shortener-db:/var/lib/mysql
+
+volumes:
+  link-shortener-db:

@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: dev
+  liquibase:
+    enabled: true
+    change-log: classpath:migrations/changelog-master.xml
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/link_shortener
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+
+open-api:
+  description: This API belongs to UKKU CORP.
+  title: link-shortener
+  version: 1.0.0
