@@ -6,7 +6,10 @@ import com.ugurukku.linkshortener.model.dto.LinkResponse;
 
 public interface LinkService {
 
-    GeneralResponse<LinkResponse> add(String userEmail, LinkRequest request);
+    GeneralResponse<LinkResponse> add(Integer userId, LinkRequest request);
 
     String redirect(String shortLink);
+
+//    GeneralResponse<PageLinkResponse> getByUserId(Integer userId);
+
 }

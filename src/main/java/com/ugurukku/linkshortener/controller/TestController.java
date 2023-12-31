@@ -1,7 +1,7 @@
 package com.ugurukku.linkshortener.controller;
 
 import com.ugurukku.linkshortener.model.repository.LinkRepository;
-import com.ugurukku.linkshortener.util.ShortLinkGenerator;
+import com.ugurukku.linkshortener.util.LinkGeneratorUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +18,7 @@ public record TestController(
     @GetMapping
     public ResponseEntity<String> test(@AuthenticationPrincipal UserDetails userDetails) {
         System.err.println(userDetails.getUsername());
-        return ResponseEntity.ok(ShortLinkGenerator.generate());
+        return ResponseEntity.ok(LinkGeneratorUtil.generate());
     }
 
 }

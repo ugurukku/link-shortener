@@ -15,16 +15,22 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MyUserDetails implements UserDetails {
 
+    Integer id;
     String username;
     String password;
     Boolean isActive;
     List<GrantedAuthority> authorities;
 
     public MyUserDetails(final User user) {
+        this.id = user.getId();
         this.username = user.getEmail();
         this.password = user.getPassword();
         this.isActive = user.getIsActive();
         this.authorities = List.of(new SimpleGrantedAuthority(user.getRole().getRole()));
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     @Override

@@ -10,7 +10,6 @@ import com.ugurukku.linkshortener.model.repository.LinkRepository;
 import com.ugurukku.linkshortener.service.LinkService;
 import com.ugurukku.linkshortener.service.UserService;
 import com.ugurukku.linkshortener.service.helper.LinkHelper;
-import com.ugurukku.linkshortener.util.ShortLinkGenerator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,13 +23,12 @@ public class LinkServiceImpl implements LinkService {
     private static final String ROOT_PATH = "http://localhost:8080/api/v1/links/redirect/";
     final LinkRepository repository;
     final LinkMapper mapper;
-    final UserService userService;
     final LinkHelper linkHelper;
 
     @Override
-    public GeneralResponse<LinkResponse> add(String userEmail, LinkRequest request) {
+    public GeneralResponse<LinkResponse> add(Integer userId, LinkRequest request) {
         Link link = mapper.mapToEntity(request);
-        link.setUser(userService.getByEmail(userEmail));
+        link.setUser(User.builder().id(userId).build());
         link.setShortLink(linkHelper.generateShortLink());
         repository.save(link);
 
