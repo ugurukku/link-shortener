@@ -1,15 +1,15 @@
 package com.ugurukku.linkshortener.service;
 
-import com.ugurukku.linkshortener.model.dto.GeneralResponse;
-import com.ugurukku.linkshortener.model.dto.LinkRequest;
-import com.ugurukku.linkshortener.model.dto.LinkResponse;
+import com.ugurukku.linkshortener.model.dto.*;
+import org.springframework.data.domain.PageRequest;
 
 public interface LinkService {
 
     GeneralResponse<LinkResponse> add(Integer userId, LinkRequest request);
 
-    String redirect(String shortLink);
+    GeneralResponse<ExactLinkResponse> getExactLink(String shortLink);
 
-//    GeneralResponse<PageLinkResponse> getByUserId(Integer userId);
+    GeneralResponse<PageResponse<LinkPageResponse>> getByUserId(Integer userId, PageRequest request);
+
 
 }

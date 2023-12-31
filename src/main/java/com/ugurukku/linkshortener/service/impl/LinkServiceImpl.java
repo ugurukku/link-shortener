@@ -1,26 +1,26 @@
 package com.ugurukku.linkshortener.service.impl;
 
-import com.ugurukku.linkshortener.model.dto.GeneralResponse;
-import com.ugurukku.linkshortener.model.dto.LinkRequest;
-import com.ugurukku.linkshortener.model.dto.LinkResponse;
+import com.ugurukku.linkshortener.model.dto.*;
 import com.ugurukku.linkshortener.model.entity.Link;
 import com.ugurukku.linkshortener.model.entity.User;
 import com.ugurukku.linkshortener.model.mapper.LinkMapper;
 import com.ugurukku.linkshortener.model.repository.LinkRepository;
 import com.ugurukku.linkshortener.service.LinkService;
-import com.ugurukku.linkshortener.service.UserService;
 import com.ugurukku.linkshortener.service.helper.LinkHelper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import static com.ugurukku.linkshortener.model.constants.LinkConstants.ROOT_PATH;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LinkServiceImpl implements LinkService {
 
-    private static final String ROOT_PATH = "http://localhost:8080/api/v1/links/redirect/";
     final LinkRepository repository;
     final LinkMapper mapper;
     final LinkHelper linkHelper;
@@ -37,8 +37,15 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public String redirect(String shortLink) {
+    public GeneralResponse<ExactLinkResponse> getExactLink(String shortLink) {
         Link link = repository.findByShortLink(shortLink).orElseThrow(() -> new RuntimeException("Short link not found!"));
-        return link.getExactLink();
+        return new GeneralResponse<>(200,"Success",mapper.mapToExactLinkResponse(link));
     }
+
+    @Override
+    public GeneralResponse<PageResponse<LinkPageResponse>> getByUserId(Integer userId, PageRequest request) {
+        Page<Link> links = repository.findAllByUserId(userId, request);
+        return new GeneralResponse<>(200,"Success",mapper.mapToPage(links));
+    }
+
 }

@@ -1,11 +1,11 @@
 package com.ugurukku.linkshortener.controller;
 
-import com.ugurukku.linkshortener.model.dto.GeneralResponse;
-import com.ugurukku.linkshortener.model.dto.LinkRequest;
-import com.ugurukku.linkshortener.model.dto.LinkResponse;
+import com.ugurukku.linkshortener.model.dto.*;
 import com.ugurukku.linkshortener.security.MyUserDetails;
 import com.ugurukku.linkshortener.service.LinkService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -22,9 +22,16 @@ public record LinkController(
     }
 
     @GetMapping("/redirect/{shortLink}")
-    public RedirectView redirect(@PathVariable(name = "shortLink") String shortLink){
-        String redirect = service.redirect(shortLink);
-        return new RedirectView(redirect);
+    public GeneralResponse<ExactLinkResponse> redirect(@PathVariable(name = "shortLink") String shortLink){
+        return service.getExactLink(shortLink);
+    }
+
+    @GetMapping
+    public GeneralResponse<PageResponse<LinkPageResponse>> getByUserId(@AuthenticationPrincipal MyUserDetails userDetails,
+                                                                       @RequestParam(name = "page",defaultValue = "0")int page,
+                                                                       @RequestParam(name = "size",defaultValue = "0") @Size(max = 100) int count
+                                                                       ){
+        return service.getByUserId(userDetails.getId(), PageRequest.of(page,count));
     }
 
 }
