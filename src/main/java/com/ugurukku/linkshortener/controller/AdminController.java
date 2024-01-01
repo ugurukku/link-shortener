@@ -1,6 +1,8 @@
 package com.ugurukku.linkshortener.controller;
 
 import com.ugurukku.linkshortener.model.dto.*;
+import com.ugurukku.linkshortener.model.dto.link.LinkAdminResponse;
+import com.ugurukku.linkshortener.model.dto.link.LinkChangeStatusRequest;
 import com.ugurukku.linkshortener.model.dto.link.LinkPageResponse;
 import com.ugurukku.linkshortener.service.AdminService;
 import org.springframework.data.domain.PageRequest;
@@ -29,8 +31,8 @@ public record AdminController(
     }
 
     @GetMapping("/links")
-    GeneralResponse<PageResponse<LinkPageResponse>> getAllLinks(@RequestParam(value = "page",defaultValue = "0")Integer page,
-                                                                @RequestParam(value = "count",defaultValue = "10")Integer count){
+    GeneralResponse<PageResponse<LinkAdminResponse>> getAllLinks(@RequestParam(value = "page",defaultValue = "0")Integer page,
+                                                                 @RequestParam(value = "count",defaultValue = "10")Integer count){
         return service.getAllLinks(PageRequest.of(page,count));
     }
 

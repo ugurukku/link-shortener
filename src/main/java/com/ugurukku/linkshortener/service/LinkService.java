@@ -1,10 +1,7 @@
 package com.ugurukku.linkshortener.service;
 
 import com.ugurukku.linkshortener.model.dto.*;
-import com.ugurukku.linkshortener.model.dto.link.ExactLinkResponse;
-import com.ugurukku.linkshortener.model.dto.link.LinkPageResponse;
-import com.ugurukku.linkshortener.model.dto.link.LinkRequest;
-import com.ugurukku.linkshortener.model.dto.link.LinkResponse;
+import com.ugurukku.linkshortener.model.dto.link.*;
 import org.springframework.data.domain.PageRequest;
 
 public interface LinkService {
@@ -18,6 +15,8 @@ public interface LinkService {
     GeneralResponse<Void> deleteById(Integer userId, Integer id);
 
     PageResponse<LinkPageResponse> getAll(PageRequest pageRequest);
+
+    PageResponse<LinkAdminResponse> getAllForAdmin(PageRequest pageRequest);
 
     void changeStatusById(Integer linkId, boolean active);
 

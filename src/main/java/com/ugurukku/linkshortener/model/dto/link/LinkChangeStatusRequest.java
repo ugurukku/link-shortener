@@ -1,4 +1,4 @@
-package com.ugurukku.linkshortener.model.dto;
+package com.ugurukku.linkshortener.model.dto.link;
 
 import com.ugurukku.linkshortener.model.constants.Status;
 

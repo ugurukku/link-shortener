@@ -3,10 +3,7 @@ package com.ugurukku.linkshortener.service.impl;
 import com.ugurukku.linkshortener.exception.AccessDeniedException;
 import com.ugurukku.linkshortener.exception.NotFoundException;
 import com.ugurukku.linkshortener.model.dto.*;
-import com.ugurukku.linkshortener.model.dto.link.ExactLinkResponse;
-import com.ugurukku.linkshortener.model.dto.link.LinkPageResponse;
-import com.ugurukku.linkshortener.model.dto.link.LinkRequest;
-import com.ugurukku.linkshortener.model.dto.link.LinkResponse;
+import com.ugurukku.linkshortener.model.dto.link.*;
 import com.ugurukku.linkshortener.model.entity.Link;
 import com.ugurukku.linkshortener.model.entity.User;
 import com.ugurukku.linkshortener.model.mapper.LinkMapper;
@@ -71,6 +68,12 @@ public class LinkServiceImpl implements LinkService {
     public PageResponse<LinkPageResponse> getAll(PageRequest pageRequest) {
         Page<Link> links = repository.findAll(pageRequest);
         return mapper.mapToPage(links);
+    }
+
+    @Override
+    public PageResponse<LinkAdminResponse> getAllForAdmin(PageRequest pageRequest) {
+        Page<Link> links = repository.findAll(pageRequest);
+        return mapper.mapToAdminPage(links);
     }
 
     @Override

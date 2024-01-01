@@ -1,6 +1,8 @@
 package com.ugurukku.linkshortener.service.impl;
 
 import com.ugurukku.linkshortener.model.dto.*;
+import com.ugurukku.linkshortener.model.dto.link.LinkAdminResponse;
+import com.ugurukku.linkshortener.model.dto.link.LinkChangeStatusRequest;
 import com.ugurukku.linkshortener.model.dto.link.LinkPageResponse;
 import com.ugurukku.linkshortener.service.AdminService;
 import com.ugurukku.linkshortener.service.LinkService;
@@ -38,8 +40,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public GeneralResponse<PageResponse<LinkPageResponse>> getAllLinks(PageRequest pageRequest) {
-        PageResponse<LinkPageResponse> users = linkService.getAll(pageRequest);
+    public GeneralResponse<PageResponse<LinkAdminResponse>> getAllLinks(PageRequest pageRequest) {
+        PageResponse<LinkAdminResponse> users = linkService.getAllForAdmin(pageRequest);
         return new GeneralResponse<>(200,"SUCCESS",users);
     }
 
