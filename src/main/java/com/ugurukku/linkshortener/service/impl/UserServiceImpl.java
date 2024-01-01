@@ -1,5 +1,6 @@
 package com.ugurukku.linkshortener.service.impl;
 
+import com.ugurukku.linkshortener.exception.NotFoundException;
 import com.ugurukku.linkshortener.model.entity.User;
 import com.ugurukku.linkshortener.model.repository.UserRepository;
 import com.ugurukku.linkshortener.service.UserService;
@@ -14,11 +15,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByEmail(String email) {
-        return repository.findUserByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        return repository.findUserByEmail(email).orElseThrow(() -> new NotFoundException("User not found"));
     }
 
-    public Integer getUserIdByEmail(String email){
-        return getByEmail(email).getId();
+    @Override
+    public void update(User user) {
+        repository.save(user);
+    }
+
+    @Override
+    public boolean checkByEmail(String email) {
+        return repository.existsByEmail(email);
     }
 
 }

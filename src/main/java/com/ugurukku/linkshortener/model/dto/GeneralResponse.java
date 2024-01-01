@@ -1,11 +1,8 @@
 package com.ugurukku.linkshortener.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.jdbc.core.SqlReturnType;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 

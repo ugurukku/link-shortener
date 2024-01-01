@@ -1,6 +1,12 @@
 package com.ugurukku.linkshortener.service.impl;
 
+import com.ugurukku.linkshortener.exception.AccessDeniedException;
+import com.ugurukku.linkshortener.exception.NotFoundException;
 import com.ugurukku.linkshortener.model.dto.*;
+import com.ugurukku.linkshortener.model.dto.link.ExactLinkResponse;
+import com.ugurukku.linkshortener.model.dto.link.LinkPageResponse;
+import com.ugurukku.linkshortener.model.dto.link.LinkRequest;
+import com.ugurukku.linkshortener.model.dto.link.LinkResponse;
 import com.ugurukku.linkshortener.model.entity.Link;
 import com.ugurukku.linkshortener.model.entity.User;
 import com.ugurukku.linkshortener.model.mapper.LinkMapper;
@@ -14,6 +20,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import static com.ugurukku.linkshortener.model.constants.ErrorMessages.ACCESS_DENIED_LINK;
+import static com.ugurukku.linkshortener.model.constants.ErrorMessages.LINK_NOT_FOUND;
 import static com.ugurukku.linkshortener.model.constants.LinkConstants.ROOT_PATH;
 
 @Service
@@ -38,7 +46,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public GeneralResponse<ExactLinkResponse> getExactLink(String shortLink) {
-        Link link = repository.findByShortLink(shortLink).orElseThrow(() -> new RuntimeException("Short link not found!"));
+        Link link = repository.findByShortLink(shortLink).orElseThrow(() -> new NotFoundException(LINK_NOT_FOUND));
         return new GeneralResponse<>(200,"Success",mapper.mapToExactLinkResponse(link));
     }
 
@@ -46,6 +54,21 @@ public class LinkServiceImpl implements LinkService {
     public GeneralResponse<PageResponse<LinkPageResponse>> getByUserId(Integer userId, PageRequest request) {
         Page<Link> links = repository.findAllByUserId(userId, request);
         return new GeneralResponse<>(200,"Success",mapper.mapToPage(links));
+    }
+
+    @Override
+    public GeneralResponse<Void> deleteById(Integer userId, Integer id) {
+        Link link = getById(id);
+        if (link.getUser().getId().equals(userId) || link.getUser().getRole().getRole().equals("ADMIN")){
+         repository.deleteById(id);
+         return new GeneralResponse<>(200,"Link successfully deleted.");
+        }else {
+            throw new AccessDeniedException(ACCESS_DENIED_LINK);
+        }
+    }
+
+    public Link getById(Integer id){
+        return repository.findById(id).orElseThrow(() -> new NotFoundException(LINK_NOT_FOUND));
     }
 
 }

@@ -1,6 +1,9 @@
 package com.ugurukku.linkshortener.model.mapper;
 
 import com.ugurukku.linkshortener.model.dto.*;
+import com.ugurukku.linkshortener.model.dto.link.ExactLinkResponse;
+import com.ugurukku.linkshortener.model.dto.link.LinkPageResponse;
+import com.ugurukku.linkshortener.model.dto.link.LinkRequest;
 import com.ugurukku.linkshortener.model.entity.Link;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -9,6 +12,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.ugurukku.linkshortener.model.constants.LinkConstants.ROOT_PATH;
 
 @Component
 public class LinkMapper {
@@ -41,7 +46,7 @@ public class LinkMapper {
                 .map(link ->
                         LinkPageResponse.builder()
                                 .id(link.getId())
-                                .shortLink(link.getShortLink())
+                                .shortLink(ROOT_PATH + link.getShortLink())
                                 .createdAt(link.getCreatedAt())
                                 .isActive(link.getIsActive())
                                 .exactLink(link.getExactLink())

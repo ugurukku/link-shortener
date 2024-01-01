@@ -1,6 +1,8 @@
 package com.ugurukku.linkshortener.config;
 
+import com.ugurukku.linkshortener.model.property.SecurityProperty;
 import com.ugurukku.linkshortener.security.AuthorizationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,9 +19,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-    private static final String[] ALLOWED_URLS = {"/v3/api-docs/**","/swagger-ui/**","/api/v1/auth/**","/api/v1/links/redirect/**"};
+    private final SecurityProperty property;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -46,8 +49,8 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(request -> {
                     // Swagger UI
-                    request.requestMatchers(ALLOWED_URLS).permitAll();
-                    request.requestMatchers("/**").authenticated();
+                    request.requestMatchers(property.getAllowedUrls()).permitAll();
+                    request.anyRequest().authenticated();
                 })
                 .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
 //                .exceptionHandling(eh -> eh.authenticationEntryPoint(authEntryPoint))

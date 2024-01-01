@@ -13,5 +13,6 @@ import org.springframework.context.annotation.Configuration;
 public class SecurityProperty {
 
     JwtProperty jwt;
+    String[] allowedUrls;
 
 }
