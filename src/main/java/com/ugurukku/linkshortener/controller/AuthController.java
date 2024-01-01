@@ -4,8 +4,10 @@ import com.ugurukku.linkshortener.model.dto.GeneralResponse;
 import com.ugurukku.linkshortener.model.dto.RegisterRequest;
 import com.ugurukku.linkshortener.model.dto.RegisterResponse;
 import com.ugurukku.linkshortener.model.dto.ResetPasswordRequest;
+import com.ugurukku.linkshortener.security.MyUserDetails;
 import com.ugurukku.linkshortener.service.AuthService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,8 +27,8 @@ public record AuthController(
     }
 
     @PutMapping("/reset")
-    public GeneralResponse<Void> reset(@RequestBody @Valid ResetPasswordRequest request){
-        return service.reset(request);
+    public GeneralResponse<Void> reset(@AuthenticationPrincipal MyUserDetails userDetails, @RequestBody @Valid ResetPasswordRequest request){
+        return service.resetByEmail(userDetails.getUsername(),request);
     }
 
 }

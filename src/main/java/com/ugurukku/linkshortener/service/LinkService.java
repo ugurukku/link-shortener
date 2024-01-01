@@ -13,8 +13,13 @@ public interface LinkService {
 
     GeneralResponse<ExactLinkResponse> getExactLink(String shortLink);
 
-    GeneralResponse<PageResponse<LinkPageResponse>> getByUserId(Integer userId, PageRequest request);
-
+    GeneralResponse<PageResponse<LinkPageResponse>> getAllByUserId(Integer userId, PageRequest request);
 
     GeneralResponse<Void> deleteById(Integer userId, Integer id);
+
+    PageResponse<LinkPageResponse> getAll(PageRequest pageRequest);
+
+    void changeStatusById(Integer linkId, boolean active);
+
+    void deleteById(Integer linkId);
 }

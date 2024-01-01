@@ -50,6 +50,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> {
                     // Swagger UI
                     request.requestMatchers(property.getAllowedUrls()).permitAll();
+                    request.requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN");
                     request.anyRequest().authenticated();
                 })
                 .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)

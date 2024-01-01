@@ -1,6 +1,6 @@
 package com.ugurukku.linkshortener.util;
 
-public class LinkGeneratorUtil {
+public final class LinkGeneratorUtil {
 
     private static final String[] CHARACTERS = new String[]{
             "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",

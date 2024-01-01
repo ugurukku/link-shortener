@@ -2,7 +2,6 @@ package com.ugurukku.linkshortener.util;
 
 import com.ugurukku.linkshortener.model.property.SecurityProperty;
 import lombok.Getter;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Component;
 
 import java.security.KeyFactory;
@@ -15,7 +14,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 @Component
-public class PublicPrivateKeyUtils {
+public final class PublicPrivateKeyUtils {
 
     private final SecurityProperty securityProperties;
 
@@ -29,7 +28,6 @@ public class PublicPrivateKeyUtils {
         privateKey = preparePrivateKey();
         publicKey = preparePublicKey();
     }
-
 
     private PrivateKey preparePrivateKey() {
         try {
@@ -52,4 +50,5 @@ public class PublicPrivateKeyUtils {
         }
         return null;
     }
+
 }

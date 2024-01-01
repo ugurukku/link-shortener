@@ -26,12 +26,12 @@ import static com.ugurukku.linkshortener.model.constants.LinkConstants.ROOT_PATH
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class LinkServiceImpl implements LinkService {
 
-    final LinkRepository repository;
-    final LinkMapper mapper;
-    final LinkHelper linkHelper;
+    LinkRepository repository;
+    LinkMapper mapper;
+    LinkHelper linkHelper;
 
     @Override
     public GeneralResponse<LinkResponse> add(Integer userId, LinkRequest request) {
@@ -51,7 +51,7 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public GeneralResponse<PageResponse<LinkPageResponse>> getByUserId(Integer userId, PageRequest request) {
+    public GeneralResponse<PageResponse<LinkPageResponse>> getAllByUserId(Integer userId, PageRequest request) {
         Page<Link> links = repository.findAllByUserId(userId, request);
         return new GeneralResponse<>(200,"Success",mapper.mapToPage(links));
     }
@@ -65,6 +65,24 @@ public class LinkServiceImpl implements LinkService {
         }else {
             throw new AccessDeniedException(ACCESS_DENIED_LINK);
         }
+    }
+
+    @Override
+    public PageResponse<LinkPageResponse> getAll(PageRequest pageRequest) {
+        Page<Link> links = repository.findAll(pageRequest);
+        return mapper.mapToPage(links);
+    }
+
+    @Override
+    public void changeStatusById(Integer linkId, boolean active) {
+        Link link = getById(linkId);
+        link.setIsActive(active);
+        repository.save(link);
+    }
+
+    @Override
+    public void deleteById(Integer linkId) {
+        repository.deleteById(linkId);
     }
 
     public Link getById(Integer id){

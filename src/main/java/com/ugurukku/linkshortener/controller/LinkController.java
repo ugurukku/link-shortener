@@ -28,7 +28,7 @@ public record LinkController(LinkService service) {
 
     @GetMapping
     public GeneralResponse<PageResponse<LinkPageResponse>> getByUserId(@AuthenticationPrincipal MyUserDetails userDetails, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int count) {
-        return service.getByUserId(userDetails.getId(), PageRequest.of(page, count));
+        return service.getAllByUserId(userDetails.getId(), PageRequest.of(page, count));
     }
 
     @DeleteMapping("/{id}")
