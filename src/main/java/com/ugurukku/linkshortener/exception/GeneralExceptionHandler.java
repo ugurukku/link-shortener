@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Locale;
 
+import static com.ugurukku.linkshortener.model.constants.ErrorMessages.AUTH_ERROR;
 import static com.ugurukku.linkshortener.model.constants.ErrorMessages.UNHANDLED_ERROR;
 import static org.springframework.http.HttpStatus.*;
 
@@ -43,16 +44,24 @@ public class GeneralExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GeneralResponse<Void>> handleUnexpected(Exception e, Locale locale){
-        String message = getUnexpectedLocale(locale);
+        String message = getLocale(UNHANDLED_ERROR,locale);
         log.warn("UNEXPECTED ERROR OCCURRED : {}", formatExceptionMessage(e));
         return new ResponseEntity<>(new GeneralResponse<>(500,message),INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(AuthenticationError.class)
+    public ResponseEntity<GeneralResponse<Void>> handleUnexpected(AuthenticationError e, Locale locale){
+        String message = getLocale(AUTH_ERROR,locale);
+        log.warn("AUTHENTICATION ERROR OCCURRED : {}", e.getMessage());
+        return new ResponseEntity<>(new GeneralResponse<>(403,message),FORBIDDEN);
     }
 
     private String getLocale(Exception e, Locale locale) {
         return messageSource.getMessage(e.getMessage(),null, locale);
     }
-    private String getUnexpectedLocale(Locale locale) {
-        return messageSource.getMessage(UNHANDLED_ERROR,null, locale);
+
+    private String getLocale(String message,Locale locale) {
+        return messageSource.getMessage(message,null, locale);
     }
 
     private String formatExceptionMessage(Exception exception) {
