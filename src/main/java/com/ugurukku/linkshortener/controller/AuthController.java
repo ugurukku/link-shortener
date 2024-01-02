@@ -2,7 +2,7 @@ package com.ugurukku.linkshortener.controller;
 
 import com.ugurukku.linkshortener.model.dto.GeneralResponse;
 import com.ugurukku.linkshortener.model.dto.RegisterRequest;
-import com.ugurukku.linkshortener.model.dto.RegisterResponse;
+import com.ugurukku.linkshortener.model.dto.AuthResponse;
 import com.ugurukku.linkshortener.model.dto.ResetPasswordRequest;
 import com.ugurukku.linkshortener.security.MyUserDetails;
 import com.ugurukku.linkshortener.service.AuthService;
@@ -17,12 +17,12 @@ public record AuthController(
 ) {
 
     @PostMapping("/login")
-    public GeneralResponse<RegisterResponse> login(@RequestBody @Valid RegisterRequest request){
+    public GeneralResponse<AuthResponse> login(@RequestBody @Valid RegisterRequest request){
         return service.login(request);
     }
 
     @PostMapping("/register")
-    public GeneralResponse<RegisterResponse> register(@RequestBody @Valid RegisterRequest request){
+    public GeneralResponse<AuthResponse> register(@RequestBody @Valid RegisterRequest request){
         return service.register(request);
     }
 

@@ -11,8 +11,12 @@ spring:
     properties:
       hibernate:
         default_schema: link_shortener
-  messages:
-    encoding: UTF-8
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      connect-timeout: 3000
+      password: root
 
 open-api:
   title: link-shortener
@@ -30,3 +34,4 @@ security:
     - /api/v1/auth/login
     - /api/v1/auth/register
     - /api/v1/links/redirect/**
+    - /api/v1/test/all/**

@@ -3,7 +3,6 @@ package com.ugurukku.linkshortener.controller;
 import com.ugurukku.linkshortener.model.dto.*;
 import com.ugurukku.linkshortener.model.dto.link.LinkAdminResponse;
 import com.ugurukku.linkshortener.model.dto.link.LinkChangeStatusRequest;
-import com.ugurukku.linkshortener.model.dto.link.LinkPageResponse;
 import com.ugurukku.linkshortener.service.AdminService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;

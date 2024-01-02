@@ -1,14 +1,12 @@
 package com.ugurukku.linkshortener.service;
 
-import com.ugurukku.linkshortener.model.dto.GeneralResponse;
-import com.ugurukku.linkshortener.model.dto.RegisterRequest;
-import com.ugurukku.linkshortener.model.dto.RegisterResponse;
-import com.ugurukku.linkshortener.model.dto.ResetPasswordRequest;
+import com.ugurukku.linkshortener.model.dto.*;
 
 public interface AuthService {
 
-    GeneralResponse<RegisterResponse> register(RegisterRequest request);
-    GeneralResponse<RegisterResponse> login(RegisterRequest request);
+    GeneralResponse<AuthResponse> register(RegisterRequest request);
+    GeneralResponse<AuthResponse> login(RegisterRequest request);
     GeneralResponse<Void> resetByEmail(String email,ResetPasswordRequest request);
+    GeneralResponse<AuthResponse> verify(VerifyRequest request);
 
 }
