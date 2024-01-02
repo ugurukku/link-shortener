@@ -10,4 +10,8 @@ public class OtpHelper {
         return OtpGeneratorUtil.generate();
     }
 
+    public void sendOtp(){
+
+    }
+
 }

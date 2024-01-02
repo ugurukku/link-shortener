@@ -17,6 +17,39 @@ spring:
       port: 6379
       connect-timeout: 3000
       password: root
+  rabbitmq:
+    password: guest
+    username: guest
+    host: localhost
+    port: 5672
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  messages:
+    basename: messages
+
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          servlet:
+            mvc:
+              method:
+                annotation=DEBUG:
+
+rabbit:
+  topic-exchange-name: link-shortener
+  queue-name: SEND_EMAIL
+
 
 open-api:
   title: link-shortener
@@ -33,5 +66,6 @@ security:
     - /swagger-ui/**
     - /api/v1/auth/login
     - /api/v1/auth/register
+    - /api/v1/auth/verify
     - /api/v1/links/redirect/**
     - /api/v1/test/all/**
