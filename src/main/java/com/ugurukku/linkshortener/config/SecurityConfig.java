@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -27,8 +26,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-
-import java.io.IOException;
 
 @Configuration
 @RequiredArgsConstructor
@@ -64,9 +61,7 @@ public class SecurityConfig {
                     request.requestMatchers(property.getAllowedUrls()).permitAll();
                     request.requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN");
                     request.anyRequest().authenticated();
-                }).oauth2Login(configurer -> {
-                    configurer.defaultSuccessUrl("/api/v1/auth/oauth2", true);
-                        })
+                })
                 .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(eh -> eh.authenticationEntryPoint(authEntryPoint))
                 .csrf(AbstractHttpConfigurer::disable)
