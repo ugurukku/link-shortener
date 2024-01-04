@@ -21,5 +21,4 @@ public interface UserService {
     void changeStatusById(Integer userId, boolean active);
 
     void deleteById(Integer userId);
-
 }

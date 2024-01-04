@@ -43,7 +43,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(RegisterRequest request) {
-        checkIfUserExists(request.email());
         User user = mapper.mapToEntity(request);
         return repository.save(user);
     }
@@ -72,13 +71,6 @@ public class UserServiceImpl implements UserService {
 
     private User findById(Integer userId) {
         return repository.findById(userId).orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
-    }
-
-    private void checkIfUserExists(String email) {
-        boolean checkByEmail = checkByEmail(email);
-        if (checkByEmail) {
-            throw new BadRequestException(USER_ALREADY_EXISTS);
-        }
     }
 
 }
