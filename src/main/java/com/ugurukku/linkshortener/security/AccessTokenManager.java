@@ -2,7 +2,7 @@ package com.ugurukku.linkshortener.security;
 
 import com.ugurukku.linkshortener.model.entity.User;
 import com.ugurukku.linkshortener.model.property.SecurityProperty;
-import com.ugurukku.linkshortener.util.PublicPrivateKeyUtils;
+import com.ugurukku.linkshortener.util.PublicPrivateKeyUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -34,13 +34,13 @@ public class AccessTokenManager {
                 .setIssuedAt(now)
                 .setExpiration(exp)
                 .addClaims(claims)
-                .signWith(PublicPrivateKeyUtils.getPrivateKey(), SignatureAlgorithm.RS256)
+                .signWith(PublicPrivateKeyUtil.getPrivateKey(), SignatureAlgorithm.RS256)
                 .compact();
     }
 
     public Claims read(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(PublicPrivateKeyUtils.getPublicKey())
+                .setSigningKey(PublicPrivateKeyUtil.getPublicKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();

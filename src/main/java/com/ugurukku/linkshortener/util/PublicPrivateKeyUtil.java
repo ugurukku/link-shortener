@@ -14,7 +14,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 @Component
-public final class PublicPrivateKeyUtils {
+public final class PublicPrivateKeyUtil {
 
     private final SecurityProperty securityProperties;
 
@@ -23,7 +23,7 @@ public final class PublicPrivateKeyUtils {
     @Getter
     private static PublicKey publicKey;
 
-    public PublicPrivateKeyUtils(SecurityProperty securityProperties) {
+    public PublicPrivateKeyUtil(SecurityProperty securityProperties) {
         this.securityProperties = securityProperties;
         privateKey = preparePrivateKey();
         publicKey = preparePublicKey();
