@@ -19,14 +19,19 @@ public class RabbitConfig {
     RabbitProperty property;
 
     @Bean
-    Queue sendMailQueue() {
-        return new Queue(property.getQueueName(),false);
+    Queue registerQueue() {
+        return new Queue(property.getRegisterQueueName(),false);
+    }
+
+    @Bean
+    Queue resetQueue() {
+        return new Queue(property.getResetQueueName(),false);
     }
 
     @Bean
     public MessageConverter jsonToMapMessageConverter() {
         DefaultClassMapper defaultClassMapper = new DefaultClassMapper();
-        defaultClassMapper.setTrustedPackages("com.ugurukku.linkshortener.service.messaging"); // trusted packages
+        defaultClassMapper.setTrustedPackages("com.ugurukku.linkshortener.service.messaging.*"); // trusted packages
         Jackson2JsonMessageConverter jackson2JsonMessageConverter = new Jackson2JsonMessageConverter();
         jackson2JsonMessageConverter.setClassMapper(defaultClassMapper);
         return jackson2JsonMessageConverter;

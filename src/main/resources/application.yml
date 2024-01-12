@@ -39,7 +39,8 @@ spring:
 
 rabbit:
   topic-exchange-name: link-shortener
-  queue-name: SEND_EMAIL
+  register-queue-name: REGISTER_SEND_EMAIL
+  reset-queue-name: RESET_SEND_EMAIL
 
 
 open-api:

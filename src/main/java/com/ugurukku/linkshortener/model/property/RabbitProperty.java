@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitProperty {
 
     String topicExchangeName;
-    String queueName;
+    String registerQueueName;
+    String resetQueueName;
 
 }
