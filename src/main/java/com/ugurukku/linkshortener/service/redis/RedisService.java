@@ -26,8 +26,8 @@ public class RedisService<T> {
     }
 
     public T get(String key) {
-        RBucket<T> testKey1 = redissonClient.getBucket(key);
-        return testKey1.get();
+        RBucket<T> bucket = redissonClient.getBucket(key);
+        return bucket.get();
     }
 
     public void delete(String otp) {

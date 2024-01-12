@@ -10,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SendEmailDto implements Serializable {
+public class RegisterSendEmailDto implements Serializable {
 
     String email;
     String otp;

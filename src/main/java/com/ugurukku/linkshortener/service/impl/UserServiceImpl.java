@@ -1,9 +1,8 @@
 package com.ugurukku.linkshortener.service.impl;
 
-import com.ugurukku.linkshortener.exception.BadRequestException;
 import com.ugurukku.linkshortener.exception.NotFoundException;
 import com.ugurukku.linkshortener.model.dto.PageResponse;
-import com.ugurukku.linkshortener.model.dto.RegisterRequest;
+import com.ugurukku.linkshortener.model.dto.auth.RegisterRequest;
 import com.ugurukku.linkshortener.model.dto.UserPageResponse;
 import com.ugurukku.linkshortener.model.entity.User;
 import com.ugurukku.linkshortener.model.mapper.UserMapper;

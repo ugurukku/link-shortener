@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SendEmailConsumer {
+public class RegisterSendEmailConsumer {
 
     private final EmailService emailService;
 
-    @RabbitListener(queues = "SEND_EMAIL")
-    public void consume(SendEmailDto sendEmailDto){
-        emailService.send(sendEmailDto);
+    @RabbitListener(queues = "REGISTER_SEND_EMAIL")
+    public void consume(RegisterSendEmailDto registerSendEmailDto){
+        emailService.sendRegisterEmail(registerSendEmailDto);
     }
 
 }

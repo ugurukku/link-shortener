@@ -1,6 +1,6 @@
 package com.ugurukku.linkshortener.model.mapper;
 
-import com.ugurukku.linkshortener.model.dto.RegisterRequest;
+import com.ugurukku.linkshortener.model.dto.auth.RegisterRequest;
 import com.ugurukku.linkshortener.model.dto.UserPageResponse;
 import com.ugurukku.linkshortener.model.entity.Role;
 import com.ugurukku.linkshortener.model.entity.User;

@@ -1,4 +1,4 @@
-package com.ugurukku.linkshortener.model.dto;
+package com.ugurukku.linkshortener.model.dto.auth;
 
 public record RegisterRequest(
         String email,

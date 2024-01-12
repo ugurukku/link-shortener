@@ -2,6 +2,7 @@ package com.ugurukku.linkshortener.service.impl;
 
 import com.ugurukku.linkshortener.exception.BadRequestException;
 import com.ugurukku.linkshortener.model.dto.*;
+import com.ugurukku.linkshortener.model.dto.auth.*;
 import com.ugurukku.linkshortener.model.entity.User;
 import com.ugurukku.linkshortener.security.AccessTokenManager;
 import com.ugurukku.linkshortener.service.AuthService;
@@ -37,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public GeneralResponse<Void> resetByEmail(String email, ResetPasswordRequest request) {
+    public GeneralResponse<Void> changePassword(String email, ChangePasswordRequest request) {
         User user = userService.getByEmail(email);
         if (encoder.matches(request.oldPassword(), user.getPassword())) {
             user.setPassword(encoder.encode(request.newPassword()));
@@ -50,10 +51,25 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public GeneralResponse<AuthResponse> verify(VerifyRequest verifyRequest) {
-        RegisterRequest registerRequest = helper.verify(verifyRequest);
+        RegisterRequest registerRequest = helper.verifyRegister(verifyRequest);
         User user = userService.save(registerRequest);
         String accessToken = accessTokenManager.generate(user);
         return new GeneralResponse<>(201, "SUCCESS", new AuthResponse(accessToken));
+    }
+
+    @Override
+    public GeneralResponse<Void> resetPassword(ResetPasswordRequest request) {
+        helper.prepareForPasswordReset(request);
+        return new GeneralResponse<>(200, "SUCCESS");
+    }
+
+    @Override
+    public GeneralResponse<Void> verifyReset(VerifyResetRequest request) {
+        helper.verifyReset(request);
+        User user = userService.getByEmail(request.email());
+        user.setPassword(encoder.encode(request.newPassword()));
+        userService.update(user);
+        return new GeneralResponse<>(200, "Password successfully updated.");
     }
 
     private void checkIfUserExists(String email) {
